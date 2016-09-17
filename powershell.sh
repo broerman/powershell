@@ -70,6 +70,7 @@ fi
 
 # copy COMMANDFILE to  windows
 echo "put $COMMANDFILE" | sftp -q  -b - $POWERSHELLUSER@$POWERSHELLHOST 2>&1 
+rm $COMMANDFILE
 
 # execute COMMANDFILE on  windows
 ssh -a -x $POWERSHELLUSER@$POWERSHELLHOST Powershell -File $COMMANDFILE
