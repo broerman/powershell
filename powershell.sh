@@ -13,11 +13,16 @@ DEBUG=${DEBUG-false}
 VERBOSE=false
 
 usage () {
-        echo "Usage:
-            `basename $0`                         # invokes Powershell as shell
-            `basename $0` -c 'Command Arg1 Arg2'  # invokes Powershell eg. 'Get-Module -ListAvailable'
-                              Commands must be quotet!!!   
-            `basename $0` -f  Commandfile         # invokes Powershellscript"   
+        echo "Usage: 
+            `basename $0`                         # invokes an ugly  Powershell  
+            `basename $0` -c 'Command Arg1 Arg2'  # executes \"-Command\"  -eg. 'Get-Module -ListAvailable'
+                                     Command must be quotet!!!   
+            `basename $0` -f  Commandfile         # executes ps1 file   
+
+                          -H winhost              #  overwrites exported  POWERSHELLHOST    
+                          -u winusername          #  overwrites exported  POWERSHELLDOMAIN\\\\\POWERSHELLUSER
+                                     Backslash must be doubled!!!
+                          -v be verbose"
           
         exit 1
 }
@@ -38,11 +43,6 @@ while getopts 'c:f:u:H:hv' OPTION ; do
   esac
 done
  
-
-
-# if test "X$1" == "X-h" ; then usage ; fi
-# if test "X$1" == "X-?" ; then usage ; fi
-
 
 
 if test -z $COMMANDFILE 
