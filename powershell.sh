@@ -15,7 +15,7 @@ VERBOSE=false
 usage () {
         echo "Usage:
             `basename $0`                         # invokes Powershell as shell
-            `basename $0` -c 'Command Arg1 Arg2'  # invokes Powershell eg. Get-Module -ListAvailable
+            `basename $0` -c 'Command Arg1 Arg2'  # invokes Powershell eg. 'Get-Module -ListAvailable'
                               Commands must be quotet!!!   
             `basename $0` -f  Commandfile         # invokes Powershellscript"   
           
