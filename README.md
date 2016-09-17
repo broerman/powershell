@@ -12,7 +12,7 @@ Usage:
             powershell.sh -f  Commandfile         # invokes Powershellscript
 ```
 
-In your  ~/.bashrc you should place Variables like
+In your  ~/.bashrc you should place variables like this
 
 ```bash
 export POWERSHELLHOST=windowswithopenssh
@@ -20,5 +20,5 @@ export POWERSHELLUSER=Administrator
 export POWERSHELLDOMAIN=EXAMPLE
 ```
 
-To avoid typing your password twice , copy your SSH publickey to your windows home directory.
+To avoid typing your password twice, copy your SSH publickey to your windows home directory.
 
