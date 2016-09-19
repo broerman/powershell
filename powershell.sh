@@ -1,13 +1,14 @@
 #!/bin/bash
 #  Executes Powershell  via OpenSSH for Windows from Linux
 #  16.9.2016 Bernd Broermann
+#  19.9.2016 Bernd Broermann
 
 
 # export  variables POWERSHELLHOST, POWERSHELLUSER and  POWERSHELLDOMAIN  in  your .bashrc 
 # otherwise they will be set to
 POWERSHELLDOMAIN=${POWERSHELLDOMAIN=EXAMPLE}
 POWERSHELLHOST=${POWERSHELLHOST-win2012withopenssh.example.com}
-POWERSHELLUSER=${POWERSHELLUSER-$POWERSHELLDOMAIN\\$USER}
+POWERSHELLUSER=${POWERSHELLUSER-$USER}
 
 DEBUG=${DEBUG-false}
 VERBOSE=false
@@ -50,7 +51,7 @@ if test -z $COMMANDFILE
        COMMANDFILE="powershell.ps1"         
        if test ! -z "$COMMAND"
              then  echo -e "$COMMAND\n" > $COMMANDFILE 
-             else  echo "-" > $COMMANDFILE
+             else  COMMANDFILE="-"
        fi
          
     fi
@@ -59,19 +60,21 @@ if $VERBOSE ; then
 echo  "
 POWERSHELLUSER=  [$POWERSHELLUSER]
 POWERSHELLHOST=  [$POWERSHELLHOST]
+POWERSHELLDOMAIN=  [$POWERSHELLDOMAIN]
 COMMAND=         [$COMMAND]
 COMMANDFILE=     [$COMMANDFILE]
 "
-cat $COMMANDFILE
-
 set -x
 
 fi
 
 # copy COMMANDFILE to  windows
-echo "put $COMMANDFILE" | sftp -q  -b - $POWERSHELLUSER@$POWERSHELLHOST 2>&1 
-rm $COMMANDFILE
+if test $COMMANDFILE != "-" ; then 
+echo "put $COMMANDFILE" | sftp -b - $POWERSHELLDOMAIN\\$POWERSHELLUSER@$POWERSHELLHOST  &>/dev/null
+# rm $COMMANDFILE
+fi
 
 # execute COMMANDFILE on  windows
-ssh -a -x $POWERSHELLUSER@$POWERSHELLHOST Powershell -File $COMMANDFILE
+
+ssh -a -x $POWERSHELLDOMAIN\\$POWERSHELLUSER@$POWERSHELLHOST Powershell -File $COMMANDFILE
 
